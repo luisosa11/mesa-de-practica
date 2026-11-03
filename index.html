@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10231d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mesa de práctica">
+<meta name="description" content="Entrenador offline de Texas Hold'em para practicar decisiones con fichas ficticias.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Mesa de práctica — Texas Hold'em</title>
+<style>
+:root{--bg:#0b1512;--panel:#14241e;--panel2:#1b3028;--felt:#14543e;--felt2:#0d422f;--gold:#e4bd68;--cream:#f5f0e5;--muted:#a8b8ae;--line:#2b4439;--red:#d94b50;--green:#7bc69b;--shadow:0 16px 40px rgba(0,0,0,.28)}
+*{box-sizing:border-box}html{background:var(--bg);color:var(--cream);font-family:ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#213c30 0,transparent 45%),var(--bg);min-height:100vh;padding:0 0 env(safe-area-inset-bottom)}button{font:inherit;cursor:pointer;border:0}button:disabled{opacity:.4;cursor:not-allowed}.app{max-width:560px;margin:0 auto;padding: max(16px,env(safe-area-inset-top)) 14px 28px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#e9c777,#a77b32);display:grid;place-items:center;color:#17221b;font-size:25px;box-shadow:0 5px 18px #0005}.brand h1{font-size:18px;margin:0;letter-spacing:.2px}.brand p{font-size:11px;margin:2px 0 0;color:var(--muted)}.pill{font-size:11px;padding:7px 10px;border:1px solid #456252;border-radius:99px;color:#c7d7cb;background:#16271f}.panel{background:linear-gradient(180deg,#192b23,#13221c);border:1px solid var(--line);border-radius:20px;padding:15px;box-shadow:var(--shadow);margin-bottom:12px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title h2{font-size:14px;margin:0}.subtle{color:var(--muted);font-size:12px}.table{background:radial-gradient(ellipse at center,#1d7554 0,#14553e 65%,#0e412f 100%);border:7px solid #684b2c;border-radius:46% / 30%;padding:19px 13px 17px;min-height:325px;box-shadow:inset 0 0 0 2px #b58a4b,inset 0 0 35px #052a1c,0 8px 20px #0005;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px}.playerline{display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px}.player{background:#0d211aeb;border:1px solid #7d9a82;border-radius:14px;padding:8px 11px;min-width:126px;max-width:48%;box-shadow:0 4px 12px #0004}.player.me{border-color:var(--gold)}.player.active{outline:2px solid var(--gold);box-shadow:0 0 0 4px #edc87825,0 4px 12px #0004}.player .name{font-size:12px;font-weight:750}.player .meta{font-size:10px;color:#c0d0c4;margin-top:3px}.dealer{font-size:9px;color:#1d291e;background:var(--gold);border-radius:50%;padding:3px 5px;font-weight:900;margin-left:4px}.pot{display:flex;align-items:center;gap:7px;color:#fff6dc;font-weight:750;font-size:13px;text-shadow:0 1px 2px #000}.pot .chip{width:21px;height:21px;border-radius:50%;background:repeating-conic-gradient(#e7d2a0 0 12deg,#c59b4e 12deg 24deg);border:2px solid #fff1c5;box-shadow:0 2px 4px #0006}.cards{display:flex;align-items:center;justify-content:center;gap:7px;min-height:76px}.card{width:48px;height:68px;background:#fffdf8;color:#20251f;border-radius:8px;box-shadow:0 3px 7px #0018;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:850;line-height:1;position:relative}.card .rank{font-size:22px}.card .suit{font-size:22px;margin-top:3px}.card.red{color:#ce3e45}.card.back{background:repeating-linear-gradient(45deg,#1d4773,#1d4773 5px,#f4eee0 5px,#f4eee0 7px);border:3px solid #fff}.board-label{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#d8ead9}.hero-cards .card{width:57px;height:81px}.hero-cards .rank,.hero-cards .suit{font-size:26px}.player-actions{font-size:10px;color:#e8d7a5;margin-top:4px}.statusbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:12px 2px 0}.statusbar span{font-size:11px;color:var(--muted)}.coach{border-left:3px solid var(--gold);background:#1b2b23;padding:11px 12px;border-radius:10px;margin-top:12px}.coach strong{font-size:11px;color:var(--gold);display:block;margin-bottom:4px}.coach p{font-size:12px;line-height:1.45;color:#e9eee8;margin:0}.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.btn{border-radius:12px;padding:12px 10px;font-weight:750;font-size:13px;min-height:46px;transition:transform .1s,filter .1s}.btn:active{transform:scale(.98)}.btn.primary{background:linear-gradient(180deg,#e8c878,#c59a4a);color:#1d241b}.btn.secondary{background:#263d31;color:#f5f1e7;border:1px solid #44604d}.btn.danger{background:#54292a;color:#ffe5e3;border:1px solid #884447}.btn.ghost{background:transparent;color:#d7e2d8;border:1px solid #496254}.btn.wide{grid-column:1/-1}.actions-note{font-size:11px;color:var(--muted);margin:10px 2px 0;line-height:1.4}.stackrow{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:9px}.log{max-height:130px;overflow:auto;font-size:11px;color:#bac9bd;line-height:1.55}.log div{padding:3px 0;border-bottom:1px solid #273a30}.result{background:#192d23;border:1px solid #567252;border-radius:13px;padding:12px;margin-top:10px}.result h3{margin:0 0 5px;font-size:14px;color:var(--gold)}.result p{margin:0;font-size:12px;line-height:1.45}.hidden{display:none!important}.footer{text-align:center;color:#82978a;font-size:10px;padding:12px 8px 0}.smallbtn{background:transparent;color:#e7d6a4;border:1px solid #5d6545;border-radius:9px;padding:7px 9px;font-size:10px;font-weight:700}.handtext{width:100%;min-height:110px;border:1px solid #405b4b;background:#0d1b15;color:#e7eee8;border-radius:10px;padding:10px;font:11px/1.45 ui-monospace,monospace}.modalshade{position:fixed;inset:0;background:#000a;display:grid;place-items:end center;padding:14px;z-index:10}.modal{background:#17271f;border:1px solid #526b57;border-radius:18px;padding:18px;width:min(100%,520px);max-height:80vh;overflow:auto}.modal h2{font-size:17px;margin:0 0 8px}.modal p,.modal li{font-size:12px;line-height:1.5;color:#d8e2da}.modal ul{padding-left:20px}.top-actions{display:flex;gap:7px}.top-actions button{white-space:nowrap}
+@media(min-width:440px){.table{min-height:350px;padding:22px 20px}.card{width:54px;height:74px}.hero-cards .card{width:62px;height:88px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">♠</div><div><h1>Mesa de práctica</h1><p>Texas Hold’em · entrenador sin internet</p></div></div>
+    <div class="top-actions"><button class="smallbtn" id="helpBtn">AYUDA</button><span class="pill" id="modePill">FICHAS FICTICIAS</span></div>
+  </header>
+
+  <section class="panel">
+    <div class="section-title"><h2 id="handTitle">Prepara tu primera mano</h2><span class="subtle" id="handCount">Mano 1</span></div>
+    <div class="table">
+      <div class="playerline">
+        <div class="player" id="botPanel"><div><span class="name">Rival local</span><span class="dealer hidden" id="botDealer">D</span></div><div class="meta" id="botMeta">100 fichas · esperando</div><div class="player-actions" id="botLast"></div></div>
+        <div class="subtle" style="text-align:right;font-size:10px">MESA<br>HEADS-UP</div>
+      </div>
+      <div class="cards" id="botCards" style="min-height:0;justify-content:flex-start;width:100%;padding-left:2px"></div>
+      <div class="pot"><span class="chip"></span><span>BOTE</span><strong id="pot">0</strong></div>
+      <div style="width:100%">
+        <div class="board-label" style="text-align:center;margin-bottom:7px" id="streetLabel">CARTAS COMUNITARIAS</div>
+        <div class="cards" id="board"><span class="subtle">Pulsa «Nueva mano» para repartir</span></div>
+      </div>
+      <div class="playerline" style="align-items:end">
+        <div class="player me" id="heroPanel"><div><span class="name">Tú</span><span class="dealer hidden" id="heroDealer">D</span></div><div class="meta" id="heroMeta">100 fichas · listo</div><div class="player-actions" id="heroLast"></div></div>
+        <div class="hero-cards cards" id="heroCards"></div>
+      </div>
+    </div>
+    <div class="statusbar"><span id="positionText">Botón: tú</span><span id="turnText">Listo para jugar</span></div>
+    <div class="coach" id="coachBox"><strong>PROFE OFFLINE</strong><p id="coachText">Aquí practicaremos una decisión a la vez. No hay dinero real ni conexión a internet.</p></div>
+  </section>
+
+  <section class="panel" id="actionPanel">
+    <div class="section-title"><h2 id="actionTitle">Comienza una partida</h2><span class="subtle" id="toCallText"></span></div>
+    <div class="actions" id="actions"><button class="btn primary wide" id="newHandBtn">♣ Nueva mano</button></div>
+    <p class="actions-note" id="actionNote">El rival está controlado por una estrategia local sencilla. El objetivo es practicar, no apostar dinero real.</p>
+    <div class="result hidden" id="resultBox"><h3 id="resultTitle"></h3><p id="resultText"></p></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title"><h2>Resumen de la mano</h2><button class="smallbtn" id="copyBtn">COPIAR RESUMEN</button></div>
+    <div class="log" id="log"><div>Aún no hay acciones. Comienza una mano para ver el registro.</div></div>
+    <textarea class="handtext hidden" id="exportText" readonly></textarea>
+    <p class="actions-note">Puedes copiar este resumen y pegarlo en nuestro chat para que yo analice la mano contigo.</p>
+  </section>
+  <div class="footer">Entrenador local · Sin apuestas reales · La IA del rival es básica y no representa una estrategia profesional.</div>
+</div>
+
+<div class="modalshade hidden" id="helpModal">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2>Cómo usar Mesa de práctica</h2><button class="smallbtn" id="closeHelp">CERRAR</button></div>
+    <p>Esta app funciona en el dispositivo. No necesita cuenta, no conecta con servidores y usa fichas ficticias.</p>
+    <ul>
+      <li><b>Check:</b> pasar cuando nadie ha apostado.</li>
+      <li><b>Call:</b> igualar la apuesta para seguir.</li>
+      <li><b>Bet:</b> apostar cuando todavía no hay apuesta en esa calle.</li>
+      <li><b>Raise:</b> aumentar una apuesta existente.</li>
+      <li><b>Fold:</b> retirarte de la mano.</li>
+    </ul>
+    <p>El rival local toma decisiones con reglas sencillas. El entrenador explica el concepto principal de cada acción. No conoce tus cartas privadas durante la mano.</p>
+    <p><b>Importante:</b> este entrenador funciona offline, por lo que no puede conversar con ChatGPT en vivo. Copia el resumen de la mano y tráelo a nuestro chat para recibir análisis personalizado.</p>
+    <p>Las fichas se reinician a 100 al comenzar cada mano: así puedes practicar sin quedarte sin fichas.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const suits = ['♠','♥','♦','♣'];
+const suitNames = {'♠':'picas','♥':'corazones','♦':'diamantes','♣':'tréboles'};
+const rankNames = {11:'J',12:'Q',13:'K',14:'A'};
+const rankLabel = r => rankNames[r] || String(r);
+const other = i => 1-i;
+let game = null, handNo = 0, heroButtonNext = true, botTimer = null;
+
+function makeDeck(){const d=[];for(let r=2;r<=14;r++)for(const s of suits)d.push({r,s});return shuffle(d)}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function cardText(c){return `${rankLabel(c.r)}${c.s}`}
+function cardHTML(c,extra=''){if(!c)return '';const red=c.s==='♥'||c.s==='♦';return `<div class="card ${red?'red':''} ${extra}"><span class="rank">${rankLabel(c.r)}</span><span class="suit">${c.s}</span></div>`}
+function compareRank(a,b){for(let i=0;i<Math.max(a.v.length,b.v.length);i++){const x=a.v[i]||0,y=b.v[i]||0;if(x!==y)return x-y}return 0}
+function eval5(cards){
+ const rs=cards.map(c=>c.r).sort((a,b)=>b-a), counts={};rs.forEach(r=>counts[r]=(counts[r]||0)+1);
+ const groups=Object.keys(counts).map(Number).sort((a,b)=>counts[b]-counts[a]||b-a);
+ const flush=cards.every(c=>c.s===cards[0].s);
+ const unique=[...new Set(rs)];let straightHigh=0;const seq=unique.includes(14)?[...unique,1]:unique;
+ for(let i=0;i<=seq.length-5;i++){if(seq[i]-seq[i+4]===4){straightHigh=seq[i];break}}
+ if(flush&&straightHigh)return {cat:8,v:[straightHigh],name:straightHigh===14?'Escalera real':'Escalera de color'};
+ if(counts[groups[0]]===4)return {cat:7,v:[groups[0],groups[1]],name:'Póker'};
+ if(counts[groups[0]]===3&&counts[groups[1]]===2)return {cat:6,v:[groups[0],groups[1]],name:'Full house'};
+ if(flush)return {cat:5,v:rs,name:'Color'};
+ if(straightHigh)return {cat:4,v:[straightHigh],name:'Escalera'};
+ if(counts[groups[0]]===3){const k=groups.slice(1).sort((a,b)=>b-a);return {cat:3,v:[groups[0],...k],name:'Trío'}}
+ if(counts[groups[0]]===2&&counts[groups[1]]===2){const hi=Math.max(groups[0],groups[1]),lo=Math.min(groups[0],groups[1]),k=groups.find(r=>counts[r]===1);return {cat:2,v:[hi,lo,k],name:'Doble pareja'}}
+ if(counts[groups[0]]===2){const k=groups.filter(r=>r!==groups[0]).sort((a,b)=>b-a);return {cat:1,v:[groups[0],...k],name:'Pareja'}}
+ return {cat:0,v:rs,name:'Carta alta'};
+}
+function combos(arr,k,start=0,p=[]){if(p.length===k)return [p];let out=[];for(let i=start;i<=arr.length-(k-p.length);i++)out=out.concat(combos(arr,k,i+1,[...p,arr[i]]));return out}
+function bestHand(cards){let best=null;for(const c of combos(cards,5)){const r=eval5(c);if(!best||r.cat>best.cat||(r.cat===best.cat&&compareRank(r,best)>0))best=r}return best}
+function preflopStrength(hand){let [a,b]=hand.map(c=>c.r).sort((x,y)=>y-x);let suited=hand[0].s===hand[1].s; if(a===b)return Math.min(.94,.53+(a-2)*.028);let gap=a-b-1;let score=.30+(a-10)*.035+(b-2)*.012+(suited?.065:0)-(gap===0?0:gap*.025);if(gap===0)score+=.035;if(a===14&&b>=10)score+=.07;if(a===13&&b===12)score+=.045;return Math.max(.12,Math.min(.78,score))}
+function hasFlushDraw(cards){const counts={};cards.forEach(c=>counts[c.s]=(counts[c.s]||0)+1);return Object.values(counts).some(n=>n===4)}
+function hasOpenStraightDraw(cards){const vals=[...new Set(cards.map(c=>c.r))];if(vals.includes(14))vals.push(1);for(let start=1;start<=10;start++){let n=0;for(let x=start;x<start+5;x++)if(vals.includes(x))n++;if(n===4)return true}return false}
+function strengthEstimate(hand,board,street){if(board.length===0)return preflopStrength(hand);const r=bestHand([...hand,...board]);const base=[.12,.39,.59,.71,.82,.87,.94,.985,.995][r.cat];let bonus=(r.v[0]||7)/14*.075;if(board.length<5&&hasFlushDraw([...hand,...board]))bonus+=.13;if(board.length<5&&hasOpenStraightDraw([...hand,...board]))bonus+=.09;return Math.min(.99,base+bonus)}
+function prettyHand(hand){return hand.map(cardText).join(' ')}
+function logLine(txt){game.log.push(txt);renderLog()}
+function renderLog(){$('log').innerHTML=game&&game.log.length?game.log.slice(-16).map(x=>`<div>${escapeHtml(x)}</div>`).join(''):'<div>Aún no hay acciones.</div>'}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function totalPot(){return game.players.reduce((n,p)=>n+p.total,0)}
+function toCall(i){return Math.max(0,game.currentBet-game.players[i].street)}
+function addChips(i,n){const p=game.players[i], paid=Math.max(0,Math.min(n,p.stack));p.stack-=paid;p.street+=paid;p.total+=paid;return paid}
+function streetName(){return ({preflop:'Preflop',flop:'Flop',turn:'Turn',river:'River'})[game.street]||''}
+function newHand(){
+ if(botTimer)clearTimeout(botTimer);handNo++;
+ const deck=makeDeck();game={deck,board:[],street:'preflop',players:[{name:'Tú',stack:100,street:0,total:0,hand:[deck.pop(),deck.pop()]},{name:'Rival local',stack:100,street:0,total:0,hand:[deck.pop(),deck.pop()]}],heroButton:heroButtonNext,actor:heroButtonNext?0:1,currentBet:2,checks:0,preflopState:'unopened',phase:'playing',log:[],lastAction:['',''],result:'',coach:'La mano empezó. Mira tus cartas y piensa en tu posición antes de actuar.',heroActionCount:0};
+ heroButtonNext=!heroButtonNext;
+ const sb=game.heroButton?0:1,bb=other(sb);addChips(sb,1);addChips(bb,2);
+ logLine(`Mano ${handNo}: ${game.heroButton?'tú':'el rival'} estás en el botón. Ciegas 1/2.`);
+ logLine(`Tus cartas: ${prettyHand(game.players[0].hand)}.`);
+ render();if(game.actor===1)scheduleBot();
+}
+function startNextOrNew(){newHand()}
+function heroCoach(action,amount){
+ const p=game.players[0], hand=p.hand, board=game.board, pot=totalPot();
+ if(game.street==='preflop'){
+  if(action==='fold')return 'Retirarte antes del flop puede ser correcto con manos débiles. No necesitas jugar todas las cartas.';
+  if(action==='raise')return game.heroButton?'Abrir desde el botón es una buena oportunidad: actúas en posición después del flop y puedes jugar más manos que desde UTG.':'Subir desde la ciega grande puede ser correcto; recuerda que ya tienes una ficha obligatoria invertida.';
+  if(action==='call')return 'Pagar te permite ver el flop, pero recuerda que igualar no siempre es mejor que subir o retirarte. Evalúa la fuerza de tu mano y la posición.';
+ }
+ const r=board.length?bestHand([...hand,...board]):null;
+ if(action==='check'){
+  if(r&&r.cat<=1)return 'Check puede controlar el tamaño del bote. Pasar no significa rendirse: puedes reevaluar cuando llegue la siguiente carta.';
+  return 'Check mantiene el bote controlado y te permite llegar a la siguiente carta sin invertir más fichas.';
+ }
+ if(action==='bet'||action==='raise'){
+  if(r&&r.cat>=1)return 'Piensa en valor: apuesta para que te paguen manos peores. Elige un tamaño que esas manos puedan pagar; apostar más no siempre es mejor.';
+  if(board.length<5&&(hasFlushDraw([...hand,...board])||hasOpenStraightDraw([...hand,...board])))return 'Tienes un proyecto: esta apuesta también puede ganar el bote ahora si el rival se retira. Eso se llama semi-farol.';
+  return 'Antes de apostar, pregúntate qué manos peores te pagarían o qué manos mejores podrías hacer foldear.';
+ }
+ if(action==='call')return 'Pagar te mantiene en la mano. Antes de hacerlo, pregúntate qué manos puede representar el rival y cuánto te cuesta continuar.';
+ if(action==='fold')return 'Foldear no es fracasar: a veces es la mejor forma de evitar perder más fichas con una mano que probablemente va por detrás.';
+ if(action==='allin')return 'El all-in arriesga todas tus fichas. Resérvalo para situaciones donde tengas una buena razón; una mano fuerte no siempre justifica jugarte todo.';
+ return 'Buena práctica. Piensa qué objetivo tiene tu acción antes de elegirla.';
+}
+function setCoach(s){game.coach=s;$('coachText').textContent=s}
+function actionHuman(kind,amount=0){
+ if(!game||game.phase!=='playing'||game.actor!==0)return;
+ const p=game.players[0],call=toCall(0);
+ if(kind==='fold'){
+  game.lastAction[0]='Fold';logLine('Tú: fold.');finishFold(1);return;
+ }
+ if(kind==='check'){
+  if(call>0)return;game.lastAction[0]='Check';logLine('Tú: check.');game.checks++;setCoach(heroCoach('check'));
+  if(game.street==='preflop'&&game.preflopState==='blind-option'){advanceStreet();return}
+  if(game.checks>=2){advanceStreet();return}game.actor=1;render();scheduleBot();return;
+ }
+ if(kind==='call'){
+  if(call<=0)return;const paid=addChips(0,call);game.lastAction[0]=`Call ${paid}`;logLine(`Tú: call ${paid}.`);setCoach(heroCoach('call'));
+  if(game.players.some(x=>x.stack===0)){runout();return}
+  if(game.street==='preflop'&&game.preflopState==='unopened'){game.preflopState='blind-option';game.actor=1;render();scheduleBot();return}
+  advanceStreet();return;
+ }
+ if(kind==='bet'||kind==='raise'||kind==='allin'){
+  let paid=0;
+  if(kind==='allin')paid=p.stack;
+  else if(kind==='bet')paid=Math.min(p.stack,Math.max(1,amount));
+  else {const target=game.currentBet+Math.max(2,amount);paid=Math.min(p.stack,Math.max(call,target-p.street))}
+  if(paid<=0)return;paid=addChips(0,paid);game.currentBet=p.street;game.checks=0;if(game.street==='preflop')game.preflopState='raised';
+  const actionName=kind==='allin'?'All-in':kind==='raise'?'Raise':'Bet';game.lastAction[0]=`${actionName} ${paid}`;logLine(`Tú: ${actionName.toLowerCase()} ${paid}.`);setCoach(heroCoach(kind,paid));
+  game.actor=1;render();scheduleBot();return;
+ }
+}
+function botDecision(){
+ const p=game.players[1],call=toCall(1),pot=totalPot(),st=strengthEstimate(p.hand,game.board,game.street),draw=game.board.length>0&&(hasFlushDraw([...p.hand,...game.board])||hasOpenStraightDraw([...p.hand,...game.board]));
+ if(call>0){
+  const potOdds=call/(pot+call);let threshold=Math.max(.27,potOdds+.15);
+  if(game.street==='preflop')threshold=Math.max(.35,potOdds+.13);
+  if(st+(draw?.06:0)<threshold && Math.random()<.88)return {kind:'fold'};
+  if(st>.79&&Math.random()<.18&&p.stack>call+4)return {kind:'raise',amount:Math.max(2,Math.floor(pot*.45))};
+  return {kind:'call'};
+ }
+ if(game.street==='preflop'){
+  if(st>.53&&Math.random()<.58)return {kind:'bet',amount:3};
+  return {kind:'check'};
+ }
+ if(st>.63&&Math.random()<.68)return {kind:'bet',amount:Math.max(2,Math.floor(pot*.48))};
+ if(draw&&Math.random()<.34)return {kind:'bet',amount:Math.max(2,Math.floor(pot*.35))};
+ return {kind:'check'};
+}
+function scheduleBot(){
+ if(!game||game.phase!=='playing'||game.actor!==1)return;
+ game.phase='bot';$('turnText').textContent='Rival pensando…';render();
+ botTimer=setTimeout(()=>{if(!game||game.phase!=='bot')return;game.phase='playing';const d=botDecision();botAction(d.kind,d.amount||0)},650);
+}
+function botAction(kind,amount=0){
+ const p=game.players[1],call=toCall(1);
+ if(kind==='fold'){game.lastAction[1]='Fold';logLine('Rival: fold.');finishFold(0);return}
+ if(kind==='check'){game.lastAction[1]='Check';logLine('Rival: check.');game.checks++;if(game.street==='preflop'&&game.preflopState==='blind-option'){advanceStreet();return}if(game.checks>=2){advanceStreet();return}game.actor=0;render();return}
+ if(kind==='call'){const paid=addChips(1,call);game.lastAction[1]=`Call ${paid}`;logLine(`Rival: call ${paid}.`);if(game.players.some(x=>x.stack===0)){runout();return}if(game.street==='preflop'&&game.preflopState==='unopened'){game.preflopState='blind-option';game.actor=0;render();return}advanceStreet();return}
+ if(kind==='bet'||kind==='raise'){
+  let paid=kind==='bet'?Math.min(p.stack,Math.max(1,amount)):Math.min(p.stack,Math.max(call,game.currentBet+Math.max(2,amount)-p.street));paid=addChips(1,paid);game.currentBet=p.street;game.checks=0;if(game.street==='preflop')game.preflopState='raised';game.lastAction[1]=`${kind==='bet'?'Bet':'Raise'} ${paid}`;logLine(`Rival: ${kind} ${paid}.`);game.actor=0;render();return;
+ }
+}
+function deal(n){for(let i=0;i<n;i++)game.board.push(game.deck.pop())}
+function advanceStreet(){
+ if(game.players.some(p=>p.stack===0)){runout();return}
+ game.players.forEach(p=>p.street=0);game.currentBet=0;game.checks=0;
+ if(game.street==='preflop'){game.street='flop';deal(3)}else if(game.street==='flop'){game.street='turn';deal(1)}else if(game.street==='turn'){game.street='river';deal(1)}else{showdown();return}
+ game.actor=game.heroButton?1:0;logLine(`Se reparte ${streetName()}.`);setCoach(`Llegó el ${streetName().toLowerCase()}. Observa cómo cambió la mesa y vuelve a evaluar tu mano.`);render();if(game.actor===1)scheduleBot();
+}
+function runout(){while(game.board.length<5){if(game.board.length===0)deal(3);else deal(1)}game.players.forEach(p=>p.street=0);game.street='river';logLine('Hay un jugador all-in: se muestran las cartas restantes.');showdown()}
+function finishFold(winner){const pot=totalPot();game.players[winner].stack+=pot;game.phase='done';game.result=`${game.players[winner].name} gana ${pot} fichas porque el otro jugador se retiró.`;setCoach(winner===0?'Ganaste sin mostrar tus cartas. A veces una apuesta consigue que el rival abandone la mano.':'El rival se llevó el bote. Retirarse a tiempo también forma parte del juego.');logLine(game.result);renderResult();render()}
+function showdown(){
+ const a=bestHand([...game.players[0].hand,...game.board]),b=bestHand([...game.players[1].hand,...game.board]),cmp=a.cat===b.cat?compareRank(a,b):a.cat-b.cat,pot=totalPot();
+ let msg='';if(cmp>0){game.players[0].stack+=pot;msg=`¡Ganas ${pot} fichas! Tu mejor mano: ${a.name}.`}else if(cmp<0){game.players[1].stack+=pot;msg=`El rival gana ${pot} fichas con ${b.name}.`}else{game.players[0].stack+=pot/2;game.players[1].stack+=pot/2;msg=`Empate: se reparte el bote de ${pot} fichas.`}
+ game.phase='done';game.result=msg;game.revealBot=true;logLine(`Showdown: tú ${a.name}; rival ${b.name}.`);logLine(msg);
+ if(cmp>0)setCoach('Ganaste el showdown. Revisa si tus apuestas consiguieron valor de manos peores o si simplemente llegaste al final con la mejor mano.');else if(cmp<0)setCoach('Esta vez el rival tenía una mano mejor. No significa automáticamente que jugaste mal: revisaremos tus decisiones, no solo el resultado.');else setCoach('Empataron y se repartió el bote. En el póker una misma mano puede terminar en empate.');renderResult();render();
+}
+function renderResult(){const r=$('resultBox');r.classList.remove('hidden');$('resultTitle').textContent=game.result.startsWith('¡Ganas')||game.result.startsWith('Tú ganas')?'Mano ganada':game.result.startsWith('Empate')?'Bote dividido':'Mano terminada';$('resultText').textContent=game.result;$('actionTitle').textContent='Mano completada';$('actions').innerHTML='<button class="btn primary wide" id="nextBtn">♠ Siguiente mano</button>'; $('nextBtn').addEventListener('click',newHand);$('actionNote').textContent='Cada mano es independiente: las fichas vuelven a 100 para que sigas practicando.'}
+function renderActions(){const box=$('actions');box.innerHTML='';$('resultBox').classList.add('hidden');if(!game){box.innerHTML='<button class="btn primary wide" id="newHandBtn2">♣ Nueva mano</button>';$('newHandBtn2').onclick=newHand;return}if(game.phase==='done')return;
+ if(game.actor!==0||game.phase==='bot'){
+  box.innerHTML='<button class="btn secondary wide" disabled>El rival está pensando…</button>';return;
+ }
+ const call=toCall(0),pot=totalPot(),p=game.players[0];$('actionTitle').textContent=`Tu turno · ${streetName()}`;$('toCallText').textContent=call>0?`Por pagar: ${call}`:'Sin apuesta pendiente';
+ const add=(label,cls,fn)=>{const b=document.createElement('button');b.className='btn '+cls;b.textContent=label;b.onclick=fn;box.appendChild(b)};
+ if(call===0){
+  add('Check','secondary',()=>actionHuman('check'));
+  add(`Bet ½ bote (${Math.max(2,Math.floor(pot*.5))})`,'primary',()=>actionHuman('bet',Math.min(p.stack,Math.max(2,Math.floor(pot*.5)))));
+  add(`Bet bote (${Math.max(2,pot)})`,'secondary',()=>actionHuman('bet',Math.min(p.stack,Math.max(2,pot))));
+  add(`All-in (${p.stack})`,'danger',()=>actionHuman('allin'));
+ }else{
+  add('Fold','danger',()=>actionHuman('fold'));
+  add(`Call ${Math.min(call,p.stack)}`,'primary',()=>actionHuman('call'));
+  add(`Raise +½ bote`,'secondary',()=>actionHuman('raise',Math.max(2,Math.floor(pot*.5))));
+  add(`All-in (${p.stack})`,'danger',()=>actionHuman('allin'));
+ }
+}
+function render(){if(!game)return;
+ $('handTitle').textContent=`Mano ${handNo}`;$('handCount').textContent=`${streetName()} · ${game.phase==='done'?'terminada':'en juego'}`;$('pot').textContent=totalPot();
+ $('board').innerHTML=game.board.length?game.board.map(c=>cardHTML(c)).join(''):'<span class="subtle">Sin cartas comunitarias</span>';
+ $('heroCards').innerHTML=game.players[0].hand.map(c=>cardHTML(c)).join('');$('botCards').innerHTML=game.revealBot?game.players[1].hand.map(c=>cardHTML(c)).join(''):(game.phase==='playing'?'<span class="subtle" style="font-size:9px">Cartas del rival ocultas</span>':'');
+ $('botMeta').textContent=`${game.players[1].stack} fichas · ${game.players[1].street?'apostó '+game.players[1].street:''}`;$('heroMeta').textContent=`${game.players[0].stack} fichas · ${game.players[0].street?'apostaste '+game.players[0].street:''}`;
+ $('heroPanel').classList.toggle('active',game.actor===0&&game.phase==='playing');$('botPanel').classList.toggle('active',game.actor===1||game.phase==='bot');
+ $('heroDealer').classList.toggle('hidden',!game.heroButton);$('botDealer').classList.toggle('hidden',game.heroButton);
+ $('positionText').textContent=game.heroButton?'Tú estás en el botón':'Rival en el botón';$('turnText').textContent=game.phase==='done'?'Mano terminada':game.actor===0&&game.phase==='playing'?'Tu turno': 'Turno del rival';
+ $('streetLabel').textContent=game.board.length?streetName().toUpperCase():'CARTAS COMUNITARIAS';$('botLast').textContent=game.lastAction[1]||'Rival local';$('heroLast').textContent=game.lastAction[0]||'Tus cartas';$('coachText').textContent=game.coach;
+ if(game.phase!=='done')renderActions();renderLog();
+}
+function buildSummary(){if(!game)return 'Todavía no has jugado una mano.';const hero=game.players[0],bot=game.players[1];return [`ACADEMIA DE PÓKER — RESUMEN DE MANO ${handNo}`,`Modalidad: Texas Hold’em heads-up, fichas ficticias.`,`Posición: ${game.heroButton?'Hero en botón / SB':'Hero en BB'}.`,`Tus cartas: ${prettyHand(hero.hand)}.`,`Mesa: ${game.board.length?game.board.map(cardText).join(' '):'sin flop'}.`,`Acciones:`,...game.log.map(x=>'- '+x),`Resultado: ${game.result||'Mano en curso.'}`,`Coach offline: ${game.coach}`,`Nota: rival local básico; sus cartas solo se revelan en showdown.`].join('\n')}
+$('newHandBtn').addEventListener('click',newHand);$('helpBtn').addEventListener('click',()=>$('helpModal').classList.remove('hidden'));$('closeHelp').addEventListener('click',()=>$('helpModal').classList.add('hidden'));$('helpModal').addEventListener('click',e=>{if(e.target===$('helpModal'))$('helpModal').classList.add('hidden')});
+$('copyBtn').addEventListener('click',async()=>{const s=buildSummary();const ta=$('exportText');ta.value=s;ta.classList.remove('hidden');ta.focus();ta.select();try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(s);$('copyBtn').textContent='COPIADO ✓'}else{$('copyBtn').textContent='SELECCIONADO ✓'}}catch(e){$('copyBtn').textContent='SELECCIONA Y COPIA'}setTimeout(()=>$('copyBtn').textContent='COPIAR RESUMEN',2200)});
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+renderActions();
+})();
+</script>
+</body>
+</html>
